@@ -122,6 +122,11 @@ paraéntesis balanceados. Retorna 1 si están balanceados,
 #include <string.h>
 
 int parentesisBalanceados(char *cadena) {
+    char map[128];
+    map['('] = ')';
+    map['['] = ']';
+    map['{'] = '}';
+
     Stack* stack = create_stack();
     for (int i = 0; i < strlen(cadena); i++) {
         if (cadena[i] == '(' || cadena[i] == '[' || cadena[i] == '{') {
@@ -132,11 +137,9 @@ int parentesisBalanceados(char *cadena) {
                 return 0;
             }
             char open = *(char*)pop(stack);
-            if ((open == '(' && cadena[i] != ')') ||
-                (open == '[' && cadena[i] != ']') ||
-                (open == '{' && cadena[i] != '}')) {
+            if (map[(int)open] != cadena[i]) {
                 free(stack);
-                return 0; 
+                return 0;
             }
         }
     }
@@ -144,4 +147,3 @@ int parentesisBalanceados(char *cadena) {
     free(stack);
     return balanced;
 }
-
