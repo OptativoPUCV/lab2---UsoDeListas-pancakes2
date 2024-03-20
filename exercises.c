@@ -33,16 +33,9 @@ void imprime_y_vacia_pila(Stack *P) {
    printf("]\n");
 }
 
-/* 
-Ejercicio 1.
-Crea una Lista y agrega punteros a elementos del 1 al 10.
-Recuerda que la lista almacena punteros, por lo que
-debes reservar memoria para cada elemento que agregues.
-Al finalizar retorna la lista creada.
+/* Ejericio N°1
+Se asigna *list como el puntero al primer elemento de 'List' y checkeamos la asignación de memoria. Luego iteramos 10 veces y en cada iteración se asigna memoria para un puntero a un entero que luego se asigna al final de la lista con valor 'i', que sería del 1 al 10.
 */
-
-#include "arraylist.h"
-#include <stdlib.h>
 
 List* crea_lista() {
     List* list = create_list();
@@ -62,11 +55,12 @@ List* crea_lista() {
     return list;
 }
 
-/*
-Ejercicio 2.
-Crea una función que reciba una lista de enteros (int*) y 
-retorne la suma de sus elementos.
+/* Ejercicio N°2
+Iteramos todos los punteros de la lista (elementos) y los iriamos
+sumando a nuestra variable local 'sum', la cual llevaría el recuento
+de la suma de los elementos para luego retornalo.
 */
+
 int sumaLista(List *L) {
     int sum = 0;
     for (void* data = first(L); data != NULL; data = next(L)) {
@@ -74,13 +68,12 @@ int sumaLista(List *L) {
     }
     return sum;
 }
-/*
-Ejercicio 3.
-Crea una función que reciba una lista de punteros a int (int*) y
-un entero elem. La función debe eliminar todos los elementos 
-de la lista que sean iguales a elem.
-Asume que popCurrent luego de eliminar un elemento se
-posiciona en el elemento anterior.
+
+/* Ejercicio N°3
+La función itera todos los punteros (elementos) de la lista, hasta que
+data apunte a NULL (llegamos al final del arreglo), por cada iteración
+se compara el valor del puntero *data con el número a eliminar, de ser
+así se elimina el elemento actual.
 */
 
 void eliminaElementos(List *L, int elem) {
@@ -91,11 +84,11 @@ void eliminaElementos(List *L, int elem) {
     }
 }
 
-/*
-Ejercicio 4.
-La función copia los punteros de la pila P1 en la pila P2.
-El orden de ambas pilas se debe mantener.
-Puedes usar una pila auxiliar.
+/* Ejercicio N°4
+La función es bastante simple, iteramos todo el stack y lo copiamos a nuestro stack auxiliar por medio de las funciones básicas.
+Este estaría alrevéz por como funcionarían los stacks, por lo que para
+tener el orden original hay que nuevamente, iterar el stack pero ahora
+el aux y ahora si los insertamos a ambos stacks P1 y P2 con push().
 */
 
 void copia_pila(Stack* P1, Stack* P2) {
@@ -111,15 +104,11 @@ void copia_pila(Stack* P1, Stack* P2) {
     free(aux);
 }
 
-/*
-Ejercicio 5.
-La función verifica si la cadena de entrada tiene sus 
-paraéntesis balanceados. Retorna 1 si están balanceados,
-0 en caso contrario.
+/* Ejercicio N°5
+La función simula un hashmap con un arreglo que almacenaría los códigos
+ASCII de los caracteres que necesitamos.
+Comparamos los caracteres de la cadena con los códigos ASCII de los caracteres y ejectamos la lógica que necesitamos.
 */
-
-#include <stdlib.h>
-#include <string.h>
 
 int parentesisBalanceados(char *cadena) {
     char map[128];
