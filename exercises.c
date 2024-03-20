@@ -47,13 +47,13 @@ Al finalizar retorna la lista creada.
 List* crea_lista() {
     List* list = create_list();
     if (list == NULL) {
-        return NULL; // Failed to create list
+        return NULL;
     }
 
     for (int i = 1; i <= 10; i++) {
         int* data = malloc(sizeof(int));
         if (data == NULL) {
-            return NULL; // Failed to allocate memory
+            return NULL;
         }
         *data = i;
         pushBack(list, data);
@@ -99,6 +99,16 @@ Puedes usar una pila auxiliar.
 */
 
 void copia_pila(Stack* P1, Stack* P2) {
+    Stack* aux = create_stack();
+    while (top(P1) != NULL) {
+        push(aux, pop(P1));
+    }
+    while (top(aux) != NULL) {
+        void* data = pop(aux);
+        push(P1, data);
+        push(P2, data);
+    }
+    free(aux);
 }
 
 /*
@@ -108,7 +118,30 @@ paraéntesis balanceados. Retorna 1 si están balanceados,
 0 en caso contrario.
 */
 
+#include <stdlib.h>
+#include <string.h>
+
 int parentesisBalanceados(char *cadena) {
-   return 0;
+    Stack* stack = create_stack();
+    for (int i = 0; i < strlen(cadena); i++) {
+        if (cadena[i] == '(' || cadena[i] == '[' || cadena[i] == '{') {
+            push(stack, &cadena[i]);
+        } else if (cadena[i] == ')' || cadena[i] == ']' || cadena[i] == '}') {
+            if (top(stack) == NULL) {
+                free(stack);
+                return 0;
+            }
+            char open = *(char*)pop(stack);
+            if ((open == '(' && cadena[i] != ')') ||
+                (open == '[' && cadena[i] != ']') ||
+                (open == '{' && cadena[i] != '}')) {
+                free(stack);
+                return 0; 
+            }
+        }
+    }
+    int balanced = top(stack) == NULL ? 1 : 0;
+    free(stack);
+    return balanced;
 }
 
