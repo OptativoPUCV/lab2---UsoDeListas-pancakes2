@@ -41,9 +41,25 @@ debes reservar memoria para cada elemento que agregues.
 Al finalizar retorna la lista creada.
 */
 
+#include "arraylist.h"
+#include <stdlib.h>
+
 List* crea_lista() {
-   List* L = create_list();
-   return L;
+    List* list = create_list();
+    if (list == NULL) {
+        return NULL; // Failed to create list
+    }
+
+    for (int i = 1; i <= 10; i++) {
+        int* data = malloc(sizeof(int));
+        if (data == NULL) {
+            return NULL; // Failed to allocate memory
+        }
+        *data = i;
+        pushBack(list, data);
+    }
+
+    return list;
 }
 
 /*
@@ -52,9 +68,12 @@ Crea una función que reciba una lista de enteros (int*) y
 retorne la suma de sus elementos.
 */
 int sumaLista(List *L) {
-   return 0;
+    int sum = 0;
+    for (void* data = first(L); data != NULL; data = next(L)) {
+        sum += *(int*)data;
+    }
+    return sum;
 }
-
 /*
 Ejercicio 3.
 Crea una función que reciba una lista de punteros a int (int*) y
@@ -64,8 +83,12 @@ Asume que popCurrent luego de eliminar un elemento se
 posiciona en el elemento anterior.
 */
 
-void eliminaElementos(List*L, int elem){
-
+void eliminaElementos(List *L, int elem) {
+    for (void* data = first(L); data != NULL; data = next(L)) {
+        if (*(int*)data == elem) {
+            popCurrent(L);
+        }
+    }
 }
 
 /*
